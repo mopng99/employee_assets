@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="adding_button_to_employee_form_view" model="ir.ui.view">
+            <field name="name">adding button</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet//div[@name='button_box']" position="before">
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="open_company_asset_form"
+                                icon="fa-solid fa-list">
+                            <field name="uanalyst_num_company_assets" widget="statinfo"/>
+                        </button>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inheritence_employee_view_form" model="ir.ui.view">
+            <field name="name">hr.employee.inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form//sheet//div[hasclass('o_employee_avatar')]//field[@name='image_1920']"
+                       position="before">
+                    <br/>
+                    <br/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="adding_fields_to_product_form_view" model="ir.ui.view">
+            <field name="name">adding fields</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']" position="after">
+                    <group>
+                        <field name="uanalyst_company_asset" widget="boolean_toggle"/>
+                    </group>
+                </xpath>
+                <xpath expr="//form//sheet//page[1]//group[@name='group_standard_price']//field[@name='company_id']"
+                       position="after">
+                    <field name="employee_id" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="adding_statusbar_to_product_form_view" model="ir.ui.view">
+            <field name="name">adding statusbar</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <field name="status" widget="statusbar"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

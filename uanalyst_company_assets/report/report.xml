@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="report_company_assets" model="ir.actions.report">
+        <field name="name">Report Receiving Custody</field>
+        <field name="model">company.assets</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="print_report_name">'Company Assets'</field>
+        <field name="report_name">uanalyst_company_assets.report_company_id_assets</field>
+        <field name="report_file">uanalyst_company_assets.report_company_id_assets</field>
+        <field name="binding_model_id" ref="model_company_assets"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
+

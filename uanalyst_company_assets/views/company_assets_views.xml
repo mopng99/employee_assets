@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Form View -->
+    <record id="company_assets_view_form" model="ir.ui.view">
+        <field name="name">Company Assets Form</field>
+        <field name="model">company.assets</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_confirm" string="Confirm" type="object" states="requested"
+                            class="oe_highlight"/>
+                    <button name="action_return" string="Return" type="object" states="received"
+                            class="oe_highlight" confirm="Are you sure you want to return this product?"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <!--                        <button class="oe_stat_button" type="object" name="open_hr_expense_tree"-->
+                        <!--                                icon="fa-file-text-o">-->
+                        <!--                            <field name="total_expenses" widget="statinfo"/>-->
+                        <!--                        </button>-->
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="reference" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'requested')]}"/>
+                            <field name="analytic_distribution" widget="analytic_distribution"
+                                   optional="show"
+                                   options="{'account_field': 'account_id'}"
+                                   attrs="{'readonly': [('state', '!=', 'requested')]}"/>
+                            <field name="product_id" attrs="{'readonly': [('state', '!=', 'requested')]}"
+                                   domain="[('uanalyst_company_asset', '=', True), ('status', '!=', 'received')]"
+                                   options='{"no_create": True}'/>
+                            <field name="operation_type_id" attrs="{'readonly': [('state', '!=', 'requested')]}"/>
+                            <field name="quantity" attrs="{'readonly': [('state', '!=', 'requested')]}"/>
+                        </group>
+                        <group>
+                            <field name="reference_received" readonly="1"/>
+                            <field name="receiving_date"
+                                   attrs="{'readonly': [('state', 'in', ('returned', 'received'))], 'required': [('state', '=', 'requested')]}"/>
+                            <field name="state_received" widget="badge" decoration-danger="state_received =='cancel'"
+                                   decoration-info="state_received == 'assigned'" decoration-muted="state_received == 'draft'"
+                                   decoration-success="state_received == 'done'"
+                                   decoration-warning="state_received in ('waiting','confirmed')"/>
+                            <field name="reference_returned" readonly="1"/>
+                            <field name="returned_date"
+                                   attrs="{'readonly': [('state', 'in', ('returned', 'requested'))], 'required': [('state', '=', 'received')]}"/>
+                            <field name="state_returned" widget="badge" decoration-danger="state_returned =='cancel'"
+                                   decoration-info="state_returned == 'assigned'" decoration-muted="state_returned == 'draft'"
+                                   decoration-success="state_returned == 'done'"
+                                   decoration-warning="state_returned in ('waiting','confirmed')"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree(list) View -->
+    <record id="company_assets_view_tree" model="ir.ui.view">
+        <field name="name">Company Assets List</field>
+        <field name="model">company.assets</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1">
+                <field name="employee_id"/>
+                <field name="product_id"/>
+                <field name="receiving_date"/>
+                <field name="state"/>
+                <field name="returned_date"/>
+                <button name="action_confirm" string="Confirm" type="object" states="requested"
+                        class="oe_highlight"/>
+                <button name="action_return" string="Return" type="object" states="received"
+                        class="oe_highlight" confirm="Are you sure you want to return this product?"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="company_assets_view_search" model="ir.ui.view">
+        <field name="name">Company Assets Search</field>
+        <field name="model">company.assets</field>
+        <field name="arch" type="xml">
+            <search>
+
+            </search>
+        </field>
+    </record>
+
+    <!-- action server -->
+    <record id="company_assets_action_server" model="ir.actions.server">
+        <field name="name">Company Assets</field>
+        <field name="type">ir.actions.server</field>
+        <field name="model_id" ref="uanalyst_company_assets.model_company_assets"/>
+        <field name="binding_model_id" ref="uanalyst_company_assets.model_company_assets"/>
+        <field name="state">code</field>
+        <field name="code">
+            action = {
+            'type': 'ir.actions.act_window',
+            'view_mode': 'kanban,tree,form',
+            'res_model': 'product.template',
+            'view_type': 'kanban,tree,form',
+            'name': 'Company Assets',
+            'domain': "[('uanalyst_company_asset','=',True)]",
+            'context': {'default_uanalyst_company_asset': True},
+            }
+        </field>
+    </record>
+
+    <menuitem name="Company Assets"
+              id="company_assets_menu"
+              parent="hr.menu_config_employee"
+              action="company_assets_action_server"
+              sequence="50"/>
+</odoo>

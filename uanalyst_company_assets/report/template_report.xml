@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_company_id_assets">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h1 class="text-center">إقرار باستلام عهدة</h1>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <h4 class="text-end">:أقر انا
+                                <span t-field="doc.employee_id"/>
+                            </h4>
+                            <h4 class="text-end">:بطاقة رقم قومي
+                                <span t-field="doc.employee_id.identification_id"/>
+                            </h4>
+                            <h4 class="text-end">:الوظيفة
+                                <span t-field="doc.employee_id.job_id"/>
+                            </h4>
+                            <br/>
+                            <h4 class="text-end">:بأنني استلمت</h4>
+                            <table class="table table-condensed" style="border: 3px solid black !important;">
+                                <thead>
+                                    <th name="state" class="text-center">
+                                        <strong>الحالة</strong>
+                                    </th>
+                                    <th name="receiving_date" class="text-center">
+                                        <strong>تاريخ الاستلام</strong>
+                                    </th>
+                                    <th name="product_id" class="text-center">
+                                        <strong>المنتج</strong>
+                                    </th>
+                                </thead>
+                                <tr>
+                                    <td class="text-center">
+                                        <span t-field="doc.state"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="doc.receiving_date"/>
+                                    </td>
+                                    <td class="text-center">
+                                        <span t-field="doc.product_id"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                            <div class="text-end">
+                                <p>.وأني أتعهد بردها إلى الشركة في حالة جيدة في حال تركي لوظيفتي أو حينما يطلب مني ذلك</p>
+                                <p>.وفي حالة تلف أي قطعة أو فقدانها أو عدم تسليمها للشركة، سيتم خصم التكلفة من مستحقاتي لدى الشركة</p>
+                                <br/>
+                                <br/>
+                                <p>:توقيع الموظف</p>
+                                <p>:التاريخ</p>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>
+
